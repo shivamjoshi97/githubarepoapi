@@ -1,38 +1,108 @@
-.App {
-  text-align: center;
+body{
+  overflow-x: hidden;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+img {
+  display: block;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.containers {
+  max-width: 93.5rem;
+  margin: 0 auto;
+  padding: 0 2rem;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.profile-image {
+  float: left;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+}
+
+.profile-image img {
+  width: 100%;
+  border-radius: 50%;
+}
+.details
+{
+  line-height: 10px;
+}
+p{
+  margin: 0 !important;
+}
+
+.repo-language-color {
+    position: relative;
+    top: 1px;
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border: 1px solid var(--color-primer-border-contrast);
+    border-radius: 50%;
+}
+
+.reponame{
+  text-decoration: none !important;
+}
+.Label--secondary {
+  color: var(--color-fg-muted);
+  border-color: var(--color-border-default);
+}
+.Label {
+  display: inline-block;
+  padding: 0 7px;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 18px;
+  white-space: nowrap;
+  border: 1px solid transparent;
+  border-radius: 2em;
+  border-color: var(--color-border-default);
+}
+
+.star
+{
+  background-color: #f6f8fa;
+  width: 65%;
+  justify-content: space-around;
+  height: 35px;
+  border-radius: 12px;
+  border: solid 1.5px #000000;
+}
+.repos
+{
+  height: 32px;
+    width: 33px;
+    background-color: aquamarine;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.homepage
+{
+  background-image: url('./components/ba.webp');
+  width: 100%;
+  height: 100vh;
+}
+input{
+  width: 30%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+.submitbutton{
+  width: 20%;
+  background-color: #4CAF50;
   color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
 }
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.navlink{
+  color: #fff!important;
+  text-decoration: none!important;
 }
