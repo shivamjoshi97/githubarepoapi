@@ -16,34 +16,37 @@ export const User = (props) => {
                                 location:userdata.location,
                                 twitter:userdata.twitter_username,
                                 link:userdata.html_url,image:userdata.avatar_url,name:userdata.name});
-                    console.log(userdata);
                 })
                 .catch(() => {
                     alert('There was an error while retrieving the data')
                 });
         }, [])
   return (
-    <div className='col-lg-3'>
-            <div className='profile-image mb-3'>
-                <img src={profile.image} alt="profile"/>
+    <div className='col-lg-3 col-md-4'>
+      <div className='row'>
+          <div className='profile-image col-sm-4 col-lg-12 col-md-12 col-5'>
+                  <img src={profile.image} alt="profile"/>
+          </div>
+          <div className='mt-2 col-sm-8 col-lg-12 col-md-12 col-7'>
+            <h3>{profile.name}</h3>
+            <h5 className='text-muted'>{profile.username}</h5>
+            <div className='d-flex align-items-center'>
+              <p className='fs-7'>{profile.bio}</p>
             </div>
-            <div className='mt-2'>
-                <h3>{profile.name}</h3>
-                <h5 className='text-muted'>{profile.username}</h5>
-                <p className='fs-7'>{profile.bio}</p>
-                <div className='d-flex align-items-center'>
-                  <span><HiLocationMarker className='me-2'></HiLocationMarker></span>
-                  <span className='mt-1'>{profile.location}</span>
-                </div>
-                <div className='d-flex align-items-center'>
-                  <span><AiFillTwitterCircle className='me-2'></AiFillTwitterCircle></span>
-                  <span>{profile.twitter}</span>
-                </div>
-                <div>
-                  <span><AiFillGithub className='me-2'></AiFillGithub></span>
-                  <span>{profile.link}</span>
-                </div>
+            <div className='d-flex align-items-center'>
+              <span><HiLocationMarker className='me-2'></HiLocationMarker></span>
+              <span className='mt-1'>{profile.location}</span>
             </div>
+            <div className='d-flex align-items-center'>
+              <span><AiFillTwitterCircle className='me-2'></AiFillTwitterCircle></span>
+              <span>{profile.twitter}</span>
+            </div>
+            <div className='d-flex align-items-center'>
+              <span><AiFillGithub className='me-2'></AiFillGithub></span>
+              <span>{profile.link}</span>
+            </div>
+        </div>
+      </div>
     </div>
   )
 }

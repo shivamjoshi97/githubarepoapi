@@ -2,18 +2,30 @@ import React,{useEffect,useState} from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import User from './User';
+import Pagination from './Pagination';
 export const Card = (props) => {
+  
+// To hold the actual data
+var [data,setdata] = useState([]);
+console.log(data);
+  // User is currently on this page
+const [currentPage, setCurrentPage] = useState(1);
+// No of Records to be displayed on each page   
+const [recordsPerPage] = useState(10);
+const indexOfLastRecord = currentPage * recordsPerPage;
+const indexOfFirstRecord = indexOfLastRecord - recordsPerPage;
+const currentRecords = data.slice(indexOfFirstRecord,indexOfLastRecord);
+  console.log(currentRecords);
+  const nPages = Math.ceil(data.length / recordsPerPage)
   let { username } = useParams();
-  var [repodata,setRepodata] = useState([{}]);
-  console.log(props);
   useEffect(() => {
     axios.get(`https://api.github.com/users/${username}/repos`)
     .then(res => {
-        var repodata = res.data;
-        setRepodata(repodata);
+        var data = res.data;
+        setdata(data);
     })
     .catch(() => {
-        alert('There was an error while retrieving the data')
+        console.log("error");
     })
 }, [])
   return (
@@ -22,25 +34,26 @@ export const Card = (props) => {
         <div className='row'>
           <div className='col-lg-12 d-flex align-items-center justify-content-center'>
             <h3 className='me-3'>Repositories</h3>
-            <div className='repos'>{repodata.length}</div>
+            <div className='repos'>{data.length}</div>
           </div>
         </div>
       </header>
       <div className='containers'>
         <div className='row'>
           <User data={username}></User>
-          <div className='col-lg-9'>
-                {repodata.map((number) =>
+          <div className='col-lg-9 col-md-8'>
+                {currentRecords.map((number) =>
                     <div class="col-12 d-flex flex-justify-between width-full py-4 border-bottom color-border-muted private source">
                       <div className='col-10 col-lg-9'>
                         <h5>
-                          <a className="reponame me-3" href="#/">{number.name}</a>
+                          <a className="reponame me-3" href={number.html_url} target="_blank">{number.name}</a>
                           <span class="Label Label--secondary v-align-middle ml-1 mb-1">Public</span>
                         </h5>
                         <div class="f6 color-fg-muted mt-2">
                           <span class="ml-0 mr-3">
                             <span class="repo-language-color me-2" style={{backgroundColor: "rgb(160, 254, 95)"}}></span>
-                            <span itemprop="programmingLanguage">{number.language}</span>
+                            <span className='me-5'>{number.language}</span>
+                            <span className='fw-bolder me-2'>Updated On:</span><span>{number.pushed_at}</span>
                           </span>
                         </div>
                       </div>  
@@ -54,6 +67,11 @@ export const Card = (props) => {
                       </div>
                     </div>
                 )}
+              <Pagination 
+                nPages = { nPages }
+                currentPage = { currentPage } 
+                setCurrentPage = { setCurrentPage }
+              />
           </div>
         </div>
       </div>
