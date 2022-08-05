@@ -24,10 +24,10 @@ export const User = (props) => {
   return (
     <div className='col-lg-3 col-md-4'>
       <div className='row'>
-          <div className='profile-image col-sm-4 col-lg-12 col-md-12 col-5'>
+          <div className='profile-image col-sm-4 col-lg-12 col-md-12 col-7'>
                   <img src={profile.image} alt="profile"/>
           </div>
-          <div className='mt-2 col-sm-8 col-lg-12 col-md-12 col-7'>
+          <div className='mt-2 col-sm-8 col-lg-12 col-md-12 col-9'>
             <h3>{profile.name}</h3>
             <h5 className='text-muted'>{profile.username}</h5>
             <div className='d-flex align-items-center'>

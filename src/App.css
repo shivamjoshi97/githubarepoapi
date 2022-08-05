@@ -85,16 +85,14 @@ p{
   height: 100vh;
 }
 input{
-  width: 30%;
   padding: 12px 20px;
-  margin: 8px 0;
+  margin: 8px 0 !important;
   display: inline-block;
   border: 2px solid #ccc;
   border-radius: 5px;
   box-sizing: border-box;
 }
 .submitbutton{
-  width: 20%;
   background-color: #4CAF50;
   color: white;
   padding: 14px 20px;

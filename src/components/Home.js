@@ -8,9 +8,15 @@ export const Home = () => {
   }
   return (
     <div className='homepage d-flex align-items-center justify-content-center'>
-      <input type="text" placeholder='Enter Your Username' onChange={change}></input>
-      <button className='submitbutton'><Link className='navlink' 
-      to={{pathname:`/details/${username}`}}>find Repositiry</Link></button>
+      <div className='row'>
+        <div className='col-lg-7'>
+          <input type="text" placeholder='Enter Your Username' onChange={change}></input>
+        </div>
+        <div className='col-lg-5'>
+          <button className='submitbutton'><Link className='navlink' 
+          to={{pathname:`/details/${username}`}}>find Repositiry</Link></button>
+        </div>
+      </div>
     </div>
   )
 }
