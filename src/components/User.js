@@ -4,7 +4,7 @@ import { AiFillGithub,AiFillTwitterCircle } from "react-icons/ai";
 import { HiLocationMarker } from "react-icons/hi";
 export const User = (props) => {
     var [profile,setProfile] = useState(
-        {username:'',bio:'',location:'',twitter:'',link:'',image:'',name:''}
+        {username:'',bio:'',location:'',twitter:'',link:'',image:'',name:'',no_ofrepos:''}
       );
       useEffect(() => 
         {
@@ -15,7 +15,9 @@ export const User = (props) => {
                                 bio:userdata.bio,
                                 location:userdata.location,
                                 twitter:userdata.twitter_username,
-                                link:userdata.html_url,image:userdata.avatar_url,name:userdata.name});
+                                link:userdata.html_url,image:userdata.avatar_url,name:userdata.name,
+                                no_ofrepos:userdata.public_repos});
+                    console.log(userdata);
                 })
                 .catch(() => {
                     alert('There was an error while retrieving the data')
