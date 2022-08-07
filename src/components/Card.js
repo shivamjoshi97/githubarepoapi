@@ -3,30 +3,39 @@ import { useParams } from 'react-router-dom';
 import { AiFillGithub,AiFillTwitterCircle } from "react-icons/ai";
 import { HiLocationMarker } from "react-icons/hi";
 import ReactPaginate from 'react-paginate';
+import Preloader from './Preloader';
 export const Card = (props) => {
 var [profile,setProfile] = useState(
   {username:'',bio:'',location:'',twitter:'',link:'',image:'',name:'',no_ofrepos:''}
 );
 let pagenumber = Math.ceil(profile.no_ofrepos/10);
 var [items,setItems] = useState([]);
+var [loading,setLoading] = useState(false)
 let { username } = useParams();
   useEffect(() => {
     const getComments = async()=>{
+      try
+      {
         const res = await fetch(
-        `https://api.github.com/users/${username}/repos?per_page=10&page=1`
-        );
-        const repodata = await res.json();
-        setItems(repodata);
-        const pro_res = await fetch(
-          `https://api.github.com/users/${username}`
+          `https://api.github.com/users/${username}/repos?per_page=10&page=1`
           );
-          const userdata = await pro_res.json();
-          setProfile({username:userdata.login,
-          bio:userdata.bio,
-          location:userdata.location,
-          twitter:userdata.twitter_username,
-          link:userdata.html_url,image:userdata.avatar_url,name:userdata.name,
-          no_ofrepos:userdata.public_repos});
+          const repodata = await res.json();
+          setItems(repodata);
+          const pro_res = await fetch(
+            `https://api.github.com/users/${username}`
+            );
+            setLoading(true);
+            const userdata = await pro_res.json();
+            setProfile({username:userdata.login,
+            bio:userdata.bio,
+            location:userdata.location,
+            twitter:userdata.twitter_username,
+            link:userdata.html_url,image:userdata.avatar_url,name:userdata.name,
+            no_ofrepos:userdata.public_repos});
+      }catch(e)
+      {
+        alert("No data Found");
+      }  
     }
     getComments();
 }, [])
@@ -46,7 +55,8 @@ const handleChange=async(data)=>{
 console.log(items);
   return (
     <>
-    <header className='mt-2 border-bottom color-border-muted'>
+    {loading? <div>
+      <header className='mt-2 border-bottom color-border-muted'>
         <div className='row'>
           <div className='col-lg-12 d-flex align-items-center justify-content-center'>
             <h3 className='me-3'>Repositories</h3>
@@ -87,7 +97,7 @@ console.log(items);
                     <div class="col-12 d-flex flex-justify-between width-full py-4 border-bottom color-border-muted private source">
                       <div className='col-10 col-lg-9'>
                         <h5>
-                          <a className="reponame me-3" href={number.html_url} target="_blank">{number.name}</a>
+                          <a className="reponame me-3" href={number.html_url}  rel="noreferrer" target="_blank">{number.name}</a>
                           <span class="Label Label--secondary v-align-middle ml-1 mb-1">Public</span>
                         </h5>
                         <div class="f6 color-fg-muted mt-2">
@@ -116,6 +126,7 @@ console.log(items);
           </div>
         </div>
       </div>
+    </div>  :<Preloader></Preloader>}
     </>
   )
 }
