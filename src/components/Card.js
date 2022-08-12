@@ -127,7 +127,7 @@ const datasize=async(e)=>{
                     </div>
                 )}
                 <div className='row'>
-                <div className='col-lg-2'>
+                <div className='col-lg-2 mb-2'>
                     <form>
                       <select class="form-select form-select-sm form-select-solid" onChange={datasize} id="noofdata">
                         <option value="10">10</option>
