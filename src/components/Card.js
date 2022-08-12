@@ -8,10 +8,10 @@ export const Card = (props) => {
 var [profile,setProfile] = useState(
   {username:'',bio:'',location:'',twitter:'',link:'',image:'',name:'',no_ofrepos:''}
 );
-let pagenumber = Math.ceil(profile.no_ofrepos/10);
 var [items,setItems] = useState([]);
 var [loading,setLoading] = useState(false)
 let { username } = useParams();
+var [pages,setPages] = useState();
   useEffect(() => {
     const getComments = async()=>{
       try
@@ -32,9 +32,10 @@ let { username } = useParams();
             twitter:userdata.twitter_username,
             link:userdata.html_url,image:userdata.avatar_url,name:userdata.name,
             no_ofrepos:userdata.public_repos});
+            setPages(Math.ceil(userdata.public_repos/10));
       }catch(e)
       {
-        alert("No data Found");
+        alert("An error occured No data Found");
       }  
     }
     getComments();
@@ -47,12 +48,19 @@ const fetchdata= async(current)=>{
     return data;
 }
 const handleChange=async(data)=>{
-  console.log(data)
   let current_page = data.selected+1;
   const new_page_data = await fetchdata(current_page);
   setItems(new_page_data); 
 }
-console.log(items);
+const datasize=async(e)=>{
+  var per_page = e.target.value;
+  const res = await fetch(
+    `https://api.github.com/users/${username}/repos?per_page=${per_page}&page=1`
+    );
+    const data = await res.json();
+    setItems(data);
+    setPages(Math.ceil(profile.no_ofrepos/per_page));
+}
   return (
     <>
     {loading? <div>
@@ -118,11 +126,25 @@ console.log(items);
                       </div>
                     </div>
                 )}
-                <ReactPaginate pageCount={pagenumber} containerClassName={'pagination justify-content-center align-item-center'} 
-                pageClassName={'page-item'} pageLinkClassName={'page-link'} onPageChange={handleChange} 
-                previousClassName={'page-item'} previousLinkClassName={'page-link'} nextClassName={'page-item'} nextLinkClassName={'page-link'}
-                breakClassName={'page-item'} breakLinkClassName={'page-link'} activeClassName={'active'}
-                ></ReactPaginate>
+                <div className='row'>
+                <div className='col-lg-2'>
+                    <form>
+                      <select class="form-select form-select-sm form-select-solid" onChange={datasize} id="noofdata">
+                        <option value="10">10</option>
+                        <option value="20">20</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                      </select>
+                    </form>
+                  </div>
+                  <div className='col-lg-10'>
+                    <ReactPaginate  pageCount={pages} containerClassName={'pagination justify-content-center align-item-center'} 
+                      pageClassName={'page-item'} pageLinkClassName={'page-link'} onPageChange={handleChange} 
+                      previousClassName={'page-item'} previousLinkClassName={'page-link'} nextClassName={'page-item'} nextLinkClassName={'page-link'}
+                      breakClassName={'page-item'} breakLinkClassName={'page-link'} activeClassName={'active'}
+                    ></ReactPaginate>
+                  </div>
+                </div>
           </div>
         </div>
       </div>
