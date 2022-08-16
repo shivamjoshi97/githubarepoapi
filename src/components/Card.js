@@ -1,10 +1,11 @@
 import React,{useEffect,useState} from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams,useNavigate } from 'react-router-dom';
 import { AiFillGithub,AiFillTwitterCircle } from "react-icons/ai";
 import { HiLocationMarker } from "react-icons/hi";
 import ReactPaginate from 'react-paginate';
 import Preloader from './Preloader';
 export const Card = (props) => {
+const navigate = useNavigate();
 var [profile,setProfile] = useState(
   {username:'',bio:'',location:'',twitter:'',link:'',image:'',name:'',no_ofrepos:''}
 );
@@ -19,7 +20,15 @@ var [pages,setPages] = useState();
         const res = await fetch(
           `https://api.github.com/users/${username}/repos?per_page=10&page=1`
           );
+          if(res.status===404)
+          {
+            alert("No Result Found");
+            navigate('/');
+          }
+          else
+          {
           const repodata = await res.json();
+          console.log(res.status);
           setItems(repodata);
           const pro_res = await fetch(
             `https://api.github.com/users/${username}`
@@ -33,6 +42,7 @@ var [pages,setPages] = useState();
             link:userdata.html_url,image:userdata.avatar_url,name:userdata.name,
             no_ofrepos:userdata.public_repos});
             setPages(Math.ceil(userdata.public_repos/10));
+          }
       }catch(e)
       {
         alert("An error occured No data Found");
