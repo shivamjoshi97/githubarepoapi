@@ -11,7 +11,7 @@ export const Home = () => {
   const senddata=()=>{
     if(username===null)
     {
-      alert("Username can not be null")
+      alert("Username is required");
     }
     else{
       navigate(`/details/${username}`);
